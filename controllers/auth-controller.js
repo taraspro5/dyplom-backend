@@ -49,7 +49,6 @@ const signup = async (req, res) => {
   res.status(201).json({
     user: {
       email: newUser.email,
-      subscription: newUser.subscription,
     },
   });
 };
@@ -120,17 +119,16 @@ const signin = async (req, res) => {
     token,
     user: {
       email: user.email,
-      subscription: user.subscription,
     },
   });
 };
 
 const getCurrent = async (req, res) => {
-  const { email, subscription } = req.user;
+  const { email, avatarURL } = req.user;
 
   res.json({
     email,
-    subscription,
+    avatarURL,
   });
 };
 
