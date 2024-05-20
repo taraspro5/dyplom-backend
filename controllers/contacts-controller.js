@@ -29,6 +29,14 @@ const getById = async (req, res) => {
 
 const addContact = async (req, res) => {
   const { _id: owner } = req.user;
+  const { phone } = req.body;
+
+  const existingContact = await Contact.findOne({ phone, owner });
+
+  if (existingContact) {
+    return HttpError("400", "A contact with this phone number already exists");
+  }
+
   const result = await Contact.create({ ...req.body, owner });
 
   res.status(201).json(result);
