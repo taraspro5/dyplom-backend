@@ -68,7 +68,13 @@ const removeContact = async (req, res) => {
 
 const updateStatusContact = async (req, res) => {
   const { contactId } = req.params;
-  const result = await Contact.findByIdAndUpdate(contactId, req.body);
+  const { favorite } = req.body;
+
+  if (favorite === undefined) {
+    return res.status(400).json({ message: "Body must have field 'favorite'" });
+  }
+
+  const result = await Contact.findByIdAndUpdate(contactId, { favorite });
   if (!result) {
     throw HttpError(404, `Not found`);
   }
